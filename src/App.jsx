@@ -111,14 +111,67 @@ function App() {
     return () => observerRef.current?.disconnect();
   }, []);
 
-  // ── Form field change ──
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
-    if (formErrors[id]) {
-      setFormErrors(prev => ({ ...prev, [id]: '' }));
-    }
-  };
+  // ── Form handling ──
+
+const handleSubmit = async (e) => {
+e.preventDefault();
+
+const errors = validate();
+
+if (Object.keys(errors).length > 0) {
+setFormErrors(errors);
+return;
+}
+
+const formDataToSend = new FormData();
+
+formDataToSend.append("companyName", formData.companyName);
+formDataToSend.append("phone", formData.phone);
+formDataToSend.append("email", formData.email);
+formDataToSend.append("message", formData.message);
+
+formDataToSend.append(
+"_subject",
+"New Quote Request - Deepak Logistics"
+);
+
+formDataToSend.append(
+"_captcha",
+"false"
+);
+
+formDataToSend.append(
+"_template",
+"table"
+);
+
+try {
+const response = await fetch(
+"https://formsubmit.co/ajax/rohtash@deepaklogistics.co.in",
+{
+method: "POST",
+body: formDataToSend,
+}
+);
+
+```
+if (!response.ok) {
+  throw new Error("Submission failed");
+}
+
+setFormStatus("success");
+setFormData(INITIAL_FORM);
+
+setTimeout(() => {
+  setFormStatus("idle");
+}, 5000);
+```
+
+} catch (err) {
+console.error(err);
+alert("Failed to send inquiry. Please try again.");
+}
+};
 
   // ── Form validation ──
   const validate = () => {
@@ -138,19 +191,22 @@ function App() {
     return errors;
   };
 
-  // ── Form submit (frontend only — no backend) ──
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const errors = validate();
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      return;
-    }
-    // Simulate success (replace this block with EmailJS / API later)
-    setFormStatus('success');
-    setFormData(INITIAL_FORM);
-    setTimeout(() => setFormStatus('idle'), 5000);
-  };
+  const handleChange = (e) => {
+  const { id, value } = e.target;
+
+  setFormData(prev => ({
+    ...prev,
+    [id]: value
+  }));
+
+  if (formErrors[id]) {
+    setFormErrors(prev => ({
+      ...prev,
+      [id]: ""
+    }));
+  }
+};
+
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -246,7 +302,7 @@ function App() {
         </div>
         <div className="stat-bar-divider" />
         <div className="stat-bar-item animate-on-scroll">
-          <h3>18</h3><p>City Network</p>
+          <h3>15+</h3><p>City Network</p>
         </div>
         <div className="stat-bar-divider" />
         <div className="stat-bar-item animate-on-scroll">
@@ -340,7 +396,7 @@ function App() {
             <div className="contact-details">
               <div className="detail-item">
                 <span className="detail-icon">📧</span>
-                <p><strong>Email:</strong> info@deepaklogistics.com</p>
+                <p><strong>Email:</strong> rohtash@deepaklogistics.co.in</p>
               </div>
               <div className="detail-item">
                 <span className="detail-icon">📞</span>
@@ -366,12 +422,37 @@ function App() {
                 <button className="btn-primary" onClick={() => setFormStatus('idle')}>Send Another</button>
               </div>
             ) : (
-              <form className="quote-form" onSubmit={handleSubmit} noValidate>
+                <form
+                  className="quote-form"
+                  onSubmit={handleSubmit}
+                  noValidate
+                >
+                  <input
+                    type="hidden"
+                    name="_subject"
+                    value="New Quote Request from Deepak Logistics Website"
+                  />
+
+                  <input
+                    type="hidden"
+                    name="_captcha"
+                    value="false"
+                  />
+
+                  <input
+                    type="hidden"
+                    name="_template"
+                    value="table"
+                  />
+
+                  {/* Rest of form fields */}
+
                 <div className="form-group">
                   <label htmlFor="companyName">Company Name</label>
                   <input
                     type="text"
                     id="companyName"
+                    name="companyName"
                     placeholder="e.g. Acme Corp Ltd."
                     value={formData.companyName}
                     onChange={handleChange}
@@ -386,6 +467,7 @@ function App() {
                     <input
                       type="tel"
                       id="phone"
+                      name="phone"
                       placeholder="+91 XXXXX XXXXX"
                       value={formData.phone}
                       onChange={handleChange}
@@ -398,6 +480,7 @@ function App() {
                     <input
                       type="email"
                       id="email"
+                      name="email"
                       placeholder="you@company.com"
                       value={formData.email}
                       onChange={handleChange}
@@ -411,6 +494,7 @@ function App() {
                   <label htmlFor="message">Message / Cargo Details</label>
                   <textarea
                     id="message"
+                    name="message"
                     rows="4"
                     placeholder="Tell us about the weight, dimensions, and destination of your cargo..."
                     value={formData.message}
