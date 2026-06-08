@@ -412,7 +412,8 @@ function App() {
                 </div>
                 <div className="detail-item">
                   <span className="detail-icon">📞</span>
-                  <p><strong>Phone:</strong> +91 93279 61075 &nbsp;|&nbsp; +91 87802 60546</p>
+                  <p><strong>Phone:</strong> +91 93279 61075 <br></br> 
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +91 87802 60546</p>
                 </div>
                 <div className="detail-item">
                   <span className="detail-icon">📍</span>
@@ -603,7 +604,7 @@ function App() {
                   <span className="c-icon">✉️</span>
                   <div className="c-details">
                     <strong>Email</strong>
-                    <span>info@deepaklogistics.com</span>
+                    <span>rohtash@deepaklogistics.com</span>
                   </div>
                 </li>
                 <li>
