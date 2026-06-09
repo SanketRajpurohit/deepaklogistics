@@ -555,7 +555,7 @@ function App() {
               <div className="action-icon">✉️</div>
               <div className="action-text">
                 <h4>Email Support</h4>
-                <p>rohtash@deepaklogistics.com</p>
+                <p>rohtash@deepaklogistics.co.in</p>
               </div>
             </div>
             <div className="action-item">
@@ -604,7 +604,7 @@ function App() {
                   <span className="c-icon">✉️</span>
                   <div className="c-details">
                     <strong>Email</strong>
-                    <span>rohtash@deepaklogistics.com</span>
+                    <span>rohtash@deepaklogistics.co.in</span>
                   </div>
                 </li>
                 <li>
