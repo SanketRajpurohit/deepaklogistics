@@ -274,7 +274,7 @@ function App() {
           ))}
 
           <div className="hero-content" key={currentSlide}>
-            <p className="hero-eyebrow fade-in-up">India's Trusted Logistics Partner</p>
+            <h1 className="hero-eyebrow fade-in-up">Deepak Logistics - Nationwide Logistics & Transportation Services</h1>
             <h2 className="fade-in-up delay-1">{SLIDES[currentSlide].title}</h2>
             <p className="fade-in-up delay-2">{SLIDES[currentSlide].subtitle}</p>
             <div className="hero-buttons fade-in-up delay-3">
